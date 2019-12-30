@@ -243,10 +243,6 @@ func ReceiveAndSend(w http.ResponseWriter, req *http.Request) {
 		log.Print("[ERROR] url argument \"webhook\" is null")
 		return
 	}
-	if _, ok := req.Form["atmobiles"]; !ok {
-		log.Print("[ERROR] url argument \"atmobiles\" is null")
-		return
-	}
 	if _, ok := req.Form["isatall"]; !ok {
 		log.Print("[ERROR] url argument \"isatall\" is null")
 		return
