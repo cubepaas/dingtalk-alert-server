@@ -169,17 +169,9 @@ func SendToDingtalk(alertMessage Message, webhook string, atMobiles []string, is
 
 		description = fmt.Sprintf("\n > **%s您好，您的魔方云证书已经过期，为了保证您的使用体验，请尽快更新证书！**\n\n", alertMessage.CommonLabels["company_name"])
 	case "licenseIsDeleted":
-		if _, ok := alertMessage.CommonLabels["company_name"]; !ok {
-			return errors.New("company name is null in commonLabels")
-		}
-
-		description = fmt.Sprintf("\n > **%s您好，您的魔方云证书已被删除！您将无法登录魔方云，请尽快申请证书！**\n\n", alertMessage.CommonLabels["company_name"])
+		description = "\n > **您好，您的魔方云证书已被删除！您将无法登录魔方云，请尽快申请证书！**\n\n"
 	case "licenseIsTampered":
-		if _, ok := alertMessage.CommonLabels["company_name"]; !ok {
-			return errors.New("company name is null in commonLabels")
-		}
-
-		description = fmt.Sprintf("\n > **%s您好，您的魔方云证书已被篡改！您将无法登录魔方云，请尽快申请证书！**\n\n", alertMessage.CommonLabels["company_name"])
+		description = "\n > **您好，您的魔方云证书已被篡改！您将无法登录魔方云，请尽快申请证书！**\n\n"
 	case "licenseAtLimit":
 		if _, ok := alertMessage.CommonLabels["company_name"]; !ok {
 			return errors.New("company name is null in commonLabels")
