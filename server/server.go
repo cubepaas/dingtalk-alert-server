@@ -56,7 +56,7 @@ func SendToDingtalk(alertMessage Message, webhook string, atMobiles []string, is
 	groupKey := alertMessage.CommonLabels["group_id"]
 	status := alertMessage.Status
 
-	message := fmt.Sprintf("### 通知组：%s（状态：%s)\n\n", groupKey, status)
+	message := fmt.Sprintf("## HCaaS告警\n\n ### 告警组：%s（状态：%s)\n\n", groupKey, status)
 
 	if _, ok := alertMessage.CommonLabels["alert_type"]; !ok {
 		return errors.New("alert type is null")
@@ -156,34 +156,6 @@ func SendToDingtalk(alertMessage Message, webhook string, atMobiles []string, is
 			return errors.New("alert name is null in commonLabels")
 		}
 		description = fmt.Sprintf("\n > The metric %s crossed the threshold\n\n", alertMessage.CommonLabels["alert_name"])
-	case "licenseComeExpired":
-		if _, ok := alertMessage.CommonLabels["company_name"]; !ok {
-			return errors.New("company name is null in commonLabels")
-		}
-
-		description = fmt.Sprintf("\n > **%s您好，您的魔方云证书即将过期，为了保证您的使用体验，请及时更新证书。**\n\n", alertMessage.CommonLabels["company_name"])
-	case "licenseIsExpired":
-		if _, ok := alertMessage.CommonLabels["company_name"]; !ok {
-			return errors.New("company name is null in commonLabels")
-		}
-
-		description = fmt.Sprintf("\n > **%s您好，您的魔方云证书已经过期，为了保证您的使用体验，请尽快更新证书！**\n\n", alertMessage.CommonLabels["company_name"])
-	case "licenseIsDeleted":
-		description = "\n > **您好，您的魔方云证书已被删除！您将无法登录魔方云，请尽快申请证书！**\n\n"
-	case "licenseIsTampered":
-		description = "\n > **您好，您的魔方云证书已被篡改！您将无法登录魔方云，请尽快申请证书！**\n\n"
-	case "licenseAtLimit":
-		if _, ok := alertMessage.CommonLabels["company_name"]; !ok {
-			return errors.New("company name is null in commonLabels")
-		}
-
-		description = fmt.Sprintf("\n > **%s您好，您的魔方云节点数量已经达到证书节点数量限制。请及时升级证书。**\n\n", alertMessage.CommonLabels["company_name"])
-	case "licenseAboveLimit":
-		if _, ok := alertMessage.CommonLabels["company_name"]; !ok {
-			return errors.New("company name is null in commonLabels")
-		}
-
-		description = fmt.Sprintf("\n > **%s您好，您的魔方云节点数量已经超过证书节点数量限制。请尽快升级证书！**\n\n", alertMessage.CommonLabels["company_name"])
 	default:
 		return errors.New("invalid alert type")
 	}
@@ -209,7 +181,7 @@ func SendToDingtalk(alertMessage Message, webhook string, atMobiles []string, is
 			IsAtAll:   isAtAll,
 		},
 		Markdown: Markdown{
-			Title: fmt.Sprintf("通知组：%s（当前状态：%s）", groupKey, status),
+			Title: fmt.Sprintf("HCaaS 告警组：%s（状态：%s）", groupKey, status),
 			Text:  message,
 		},
 	}

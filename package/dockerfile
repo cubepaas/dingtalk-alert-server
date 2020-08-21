@@ -1,0 +1,3 @@
+FROM scratch
+ADD dingtalk-alert-server /
+ENTRYPOINT ["/dingtalk-alert-server"]
